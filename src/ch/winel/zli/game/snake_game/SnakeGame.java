@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class SnakeGame extends Game {
 
+    private boolean gameOver;
     private boolean gamePaused;
     private final SnakeGameLogic snakeGameLogic;
 
@@ -61,5 +62,13 @@ public class SnakeGame extends Game {
     @Override
     public void drawScene(JPanel panel, Graphics2D g) {
         snakeGameLogic.draw(panel, g);
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public boolean isPauseGame() {
+        return gamePaused;
     }
 }
