@@ -1,15 +1,16 @@
 package ch.winel.zli.game.snake_game;
-
 import ch.winel.zli.game.Game;
+import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class SnakeGame extends Game {
 
+    SnakeGameLogic snakeGameLogic;
     private boolean gameOver;
     private boolean gamePaused;
-    private final SnakeGameLogic snakeGameLogic;
+
 
     public SnakeGame() {
         gamePaused = true;
@@ -30,7 +31,6 @@ public class SnakeGame extends Game {
     public void pauseGame() {
         System.out.println("pauseGame");
         gamePaused = !gamePaused;
-        gameNeedsRedraw();
     }
 
     @Override

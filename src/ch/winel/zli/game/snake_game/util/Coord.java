@@ -22,5 +22,10 @@ public class Coord {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    @Override
+    public String toString() {
+        return "Coord[x: " + x + ", y: " + y + "]";
+    }
 }
 

@@ -1,5 +1,8 @@
 package ch.winel.zli.game.snake_game;
 
+import ch.winel.zli.game.snake_game.util.Coord;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Timer;
@@ -7,11 +10,15 @@ import java.util.TimerTask;
 
 public class SnakeGameLogic {
     private SnakeGame game;
-    private Level level = new Level();
+
+    private Level level;
+
     private Timer timer;
 
     public SnakeGameLogic(SnakeGame game) {
         this.game = game;
+        this.level = new Level();
+        initAfterLevelChanged();
     }
 
     public void draw(JPanel panel, Graphics2D g) {
@@ -19,7 +26,6 @@ public class SnakeGameLogic {
     }
 
     private void initAfterLevelChanged() {
-        // Start paused
 
         // We need a periodical tick for this level
         if (timer != null) {
@@ -36,11 +42,16 @@ public class SnakeGameLogic {
         // force redraw
     }
 
-    private void processTick() {
+    public void processTick() {
         // if game over ore paused don't do anything
         if (game.isPauseGame() || game.isGameOver()){
             return;
         }
+            System.out.println("Tick");
+            Desert desert = level.getDesert();
+            Snake snake = level.getSnake();
+            Coord nextPosition = desert.getNextPosition(snake.getHeadPosition(), snake.getDirection());
+            snake.movePosition(nextPosition);
+            game.gameNeedsRedraw();
     }
-
 }

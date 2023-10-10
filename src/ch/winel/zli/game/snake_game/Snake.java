@@ -1,27 +1,51 @@
 package ch.winel.zli.game.snake_game;
 
+import java.awt.*;
+
+import ch.winel.zli.game.snake_game.util.Coord;
 import ch.winel.zli.game.snake_game.util.MoveDirection;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Snake {
 
+    private final List<Coord> snakePos;
     private MoveDirection direction;
     private MoveDirection oldDirection;
-
+    
     public Snake() {
-        this.direction = MoveDirection.down;
-        this.oldDirection = MoveDirection.down;
+        snakePos = new ArrayList<>();
+        snakePos.add(new Coord(1,1));
+        direction = MoveDirection.down;
+        oldDirection = MoveDirection.down;
     }
 
-    public void drawHead(Graphics2D g, int positionX, int positionY, int width, int height) {
-        g.setColor(Color.yellow);
-        g.fillOval(positionX , positionY, width, height);
+    public void draw(Graphics2D g, int dx, int dy) {
+        Coord pos = getHeadPosition();
+        g.setColor(Color.blue);
+        g.fillOval(
+                pos.x * dx,
+                pos.y * dy,
+                dx,
+                dy
+        );
     }
-    public void drawBody(Graphics2D g, int positionX, int positionY, int width, int height) {
-        g.setColor(Color.GREEN);
-        g.fillRect(positionX, positionY, width, height);
+    
+    public Coord getHeadPosition() {
+        return snakePos.get(0);
+    }
+
+    public MoveDirection getDirection() {
+        return direction;
+    }
+
+    public void movePosition(Coord nextPosition) {
+        // add the new position of the head of the snake to the beginning of the snakePos list
+        snakePos.add(0, nextPosition);
+        // remove the last position of the snake from the end of the snakePos list
+        snakePos.remove(snakePos.size() - 1);
     }
 
     public void setDirection(MoveDirection direction){
@@ -48,6 +72,5 @@ public class Snake {
                 break;
         }
     }
-
 }
 
