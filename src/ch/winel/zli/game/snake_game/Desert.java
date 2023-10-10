@@ -10,9 +10,15 @@ public class Desert {
     public int width;
     public int height;
 
+    private  final int xSteps;
+    private final int ySteps;
+
+
     public Desert() {
         width = 16;
         height = 16;
+        xSteps = width;
+        ySteps = height;
     }
     public void draw(JPanel panel, Graphics2D g){
         g.setColor(Color.BLACK);
@@ -25,13 +31,13 @@ public class Desert {
         switch (direction) {
             case up: y--; break;
             case down: y++; break;
-            case right: x--; break;
-            case left: x++; break;
+            case right: x++; break;
+            case left: x--; break;
         }
-//        if (x >= xSteps) { x = 0; }
-//        if (y >= ySteps) { y = 0; }
-//        if (x < 0) { x = xSteps -1; }
-//        if (y < 0) { y = ySteps -1; }
+        if (x >= xSteps) { x = 0; }
+        if (y >= ySteps) { y = 0; }
+        if (x < 0) { x = xSteps -1; }
+        if (y < 0) { y = ySteps -1; }
         return new Coord(x, y);
     }
 }

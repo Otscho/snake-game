@@ -1,6 +1,7 @@
 package ch.winel.zli.game.snake_game;
 
 import ch.winel.zli.game.snake_game.util.Coord;
+import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class SnakeGameLogic {
         level.draw(panel, g);
     }
 
-    private void initAfterLevelChanged() {
+    void initAfterLevelChanged() {
 
         // We need a periodical tick for this level
         if (timer != null) {
@@ -44,14 +45,27 @@ public class SnakeGameLogic {
 
     public void processTick() {
         // if game over ore paused don't do anything
-        if (game.isPauseGame() || game.isGameOver()){
+        if (game.isPauseGame() || game.isGameOver()) {
             return;
         }
-            System.out.println("Tick");
-            Desert desert = level.getDesert();
-            Snake snake = level.getSnake();
-            Coord nextPosition = desert.getNextPosition(snake.getHeadPosition(), snake.getDirection());
-            snake.movePosition(nextPosition);
-            game.gameNeedsRedraw();
+        Desert desert = level.getDesert();
+        Snake snake = level.getSnake();
+        Coord nextPosition = desert.getNextPosition(snake.getHeadPosition(), snake.getDirection());
+        snake.movePosition(nextPosition);
+
+        Food food = level.getFood();
+        Coord foodPosition = food.getFoodPosition();
+        if (foodPosition.equals(nextPosition)) {
+            level.replaceFood();
+        }
+        game.gameNeedsRedraw();
+    }
+
+    public void changeDir(MoveDirection direction) {
+        level.changeDir(direction);
+    }
+
+    public void cancelTimer() {
+        timer.cancel();
     }
 }

@@ -6,8 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SnakeGame extends Game {
-
-    SnakeGameLogic snakeGameLogic;
+    SnakeGameLogic snakeGameLogic;;
     private boolean gameOver;
     private boolean gamePaused;
 
@@ -19,6 +18,18 @@ public class SnakeGame extends Game {
     @Override
     public void newGame() {
         System.out.println("newGame");
+        if (snakeGameLogic != null){
+            snakeGameLogic.cancelTimer();
+            this.snakeGameLogic = new SnakeGameLogic(this);
+            snakeGameLogic.initAfterLevelChanged();
+            if (!gamePaused){
+                gamePaused = true;
+            }
+            if (gameOver){
+                gameOver = false;
+            }
+            gameNeedsRedraw();
+        }
     }
 
     @Override
@@ -36,22 +47,25 @@ public class SnakeGame extends Game {
     @Override
     public void goUp() {
         System.out.println("goUp");
+        snakeGameLogic.changeDir(MoveDirection.up);
     }
 
     @Override
     public void goDown() {
         System.out.println("goDown");
-
+        snakeGameLogic.changeDir(MoveDirection.down);
     }
 
     @Override
     public void goLeft() {
         System.out.println("goLeft");
+        snakeGameLogic.changeDir(MoveDirection.left);
     }
 
     @Override
     public void goRight() {
         System.out.println("goRight");
+        snakeGameLogic.changeDir(MoveDirection.right);
     }
 
     @Override

@@ -14,7 +14,8 @@ public class Snake {
     private final List<Coord> snakePos;
     private MoveDirection direction;
     private MoveDirection oldDirection;
-    
+    private boolean eat;
+
     public Snake() {
         snakePos = new ArrayList<>();
         snakePos.add(new Coord(1,1));
@@ -23,11 +24,11 @@ public class Snake {
     }
 
     public void draw(Graphics2D g, int dx, int dy) {
-        Coord pos = getHeadPosition();
+        Coord headPosition = getHeadPosition();
         g.setColor(Color.blue);
         g.fillOval(
-                pos.x * dx,
-                pos.y * dy,
+                headPosition.x * dx,
+                headPosition.y * dy,
                 dx,
                 dy
         );
@@ -44,6 +45,7 @@ public class Snake {
     public void movePosition(Coord nextPosition) {
         // add the new position of the head of the snake to the beginning of the snakePos list
         snakePos.add(0, nextPosition);
+        oldDirection = direction;
         // remove the last position of the snake from the end of the snakePos list
         snakePos.remove(snakePos.size() - 1);
     }
@@ -71,6 +73,9 @@ public class Snake {
                 }
                 break;
         }
+    }
+    public void eat (){
+        this.eat = true;
     }
 }
 
