@@ -6,7 +6,7 @@ import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
