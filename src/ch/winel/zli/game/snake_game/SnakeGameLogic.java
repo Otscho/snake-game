@@ -57,6 +57,7 @@ public class SnakeGameLogic {
         Coord foodPosition = food.getFoodPosition();
         if (foodPosition.equals(nextPosition)) {
             level.replaceFood();
+            snake.eat();
         }
         game.gameNeedsRedraw();
     }

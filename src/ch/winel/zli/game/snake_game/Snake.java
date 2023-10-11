@@ -14,26 +14,38 @@ public class Snake {
     private final List<Coord> snakePos;
     private MoveDirection direction;
     private MoveDirection oldDirection;
-    private boolean eat;
+    private boolean eat = false;
 
     public Snake() {
         snakePos = new ArrayList<>();
-        snakePos.add(new Coord(1,1));
+        snakePos.add(new Coord(1, 1));
         direction = MoveDirection.down;
         oldDirection = MoveDirection.down;
     }
 
     public void draw(Graphics2D g, int dx, int dy) {
-        Coord headPosition = getHeadPosition();
-        g.setColor(Color.blue);
-        g.fillOval(
-                headPosition.x * dx,
-                headPosition.y * dy,
-                dx,
-                dy
-        );
+        for (int i = 0; i < snakePos.size(); i++) {
+            Coord pos = snakePos.get(i);
+            if (i == 0) {
+                g.setColor(Color.blue);
+                g.fillOval(
+                        pos.x * dx,
+                        pos.y * dy,
+                        dx,
+                        dy
+                );
+            } else {
+                g.setColor(Color.BLUE);
+                g.fillRect(
+                        pos.x * dx,
+                        pos.y * dy,
+                        dx,
+                        dy
+                );
+            }
+        }
     }
-    
+
     public Coord getHeadPosition() {
         return snakePos.get(0);
     }
@@ -47,10 +59,12 @@ public class Snake {
         snakePos.add(0, nextPosition);
         oldDirection = direction;
         // remove the last position of the snake from the end of the snakePos list
-        snakePos.remove(snakePos.size() - 1);
+        if (!eat)
+            snakePos.remove(snakePos.size() - 1);
+        this.eat = false;
     }
 
-    public void setDirection(MoveDirection direction){
+    public void setDirection(MoveDirection direction) {
         switch (direction) {
             case up:
                 if (oldDirection != MoveDirection.down) {
@@ -74,8 +88,15 @@ public class Snake {
                 break;
         }
     }
-    public void eat (){
+
+    public void eat() {
         this.eat = true;
+        Coord newPosition = getHeadPosition();
+        grow(newPosition);
+    }
+
+    public void grow(Coord newPosition) {
+        snakePos.add(new Coord(getHeadPosition().x, getHeadPosition().y));
     }
 }
 
