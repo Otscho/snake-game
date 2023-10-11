@@ -40,4 +40,9 @@ public class Desert {
         if (y < 0) { y = ySteps -1; }
         return new Coord(x, y);
     }
+
+    public Coord getRadomPositions(){
+
+    }
+
 }

@@ -27,7 +27,7 @@ public class Snake {
         for (int i = 0; i < snakePos.size(); i++) {
             Coord pos = snakePos.get(i);
             if (i == 0) {
-                g.setColor(Color.blue);
+                g.setColor(Color.BLUE);
                 g.fillOval(
                         pos.x * dx,
                         pos.y * dy,
@@ -35,7 +35,7 @@ public class Snake {
                         dy
                 );
             } else {
-                g.setColor(Color.BLUE);
+                g.setColor(Color.red);
                 g.fillRect(
                         pos.x * dx,
                         pos.y * dy,
@@ -59,8 +59,9 @@ public class Snake {
         snakePos.add(0, nextPosition);
         oldDirection = direction;
         // remove the last position of the snake from the end of the snakePos list
-        if (!eat)
+        if (!eat) {
             snakePos.remove(snakePos.size() - 1);
+        }
         this.eat = false;
     }
 
@@ -89,14 +90,21 @@ public class Snake {
         }
     }
 
+    public List<Coord> getSnakePosition() {
+        return new ArrayList<>(snakePos);
+    }
     public void eat() {
         this.eat = true;
-        Coord newPosition = getHeadPosition();
-        grow(newPosition);
     }
 
-    public void grow(Coord newPosition) {
-        snakePos.add(new Coord(getHeadPosition().x, getHeadPosition().y));
+    public boolean hasSelfCollision() {
+        Coord head = getHeadPosition();
+        for (int i = 1; i < snakePos.size(); i++) {
+            if (head.equals(snakePos.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
