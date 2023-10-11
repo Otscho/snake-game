@@ -5,30 +5,36 @@ import ch.winel.zli.game.snake_game.util.Coord;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Obstacles {
-    private final List<Coord> obstaclesPos;
-    private Random rand = new Random();
+    private final List<Coord> obstaclesPositions;
 
-    public Obstacles() {
-        obstaclesPos = new ArrayList<>();
+    public Obstacles(Coord random ) {
+        obstaclesPositions = new ArrayList<>();
+        obstaclesPositions.add(random);
     }
+
     public void draw(Graphics2D g, int dx, int dy) {
-        // Generate a random position for the food item
-        int x = rand.nextInt(dx -1);
-        int y = rand.nextInt(dy -1);
-        obstaclesPos.add(new Coord(x, y));
-        g.setColor(Color.RED);
-        g.fillRect(
-                obstaclesPos.get(0).x * dx,
-                obstaclesPos.get(0).y * dy,
-                dx,
-                dy
-        );
+        for (Coord obstaclesPosition : obstaclesPositions) {
+            g.setColor(Color.RED);
+            g.fillRect(
+                    obstaclesPosition.x * dx,
+                    obstaclesPosition.y * dy,
+                    dx,
+                    dy
+            );
+        }
     }
 
-    public Coord getObstaclePosition() {
-        return obstaclesPos.get(0);
+    public void addObstacle(Coord randomPosition) {
+        obstaclesPositions.add(randomPosition);
+    }
+
+    public List<Coord> getObstaclePositions() {
+        return obstaclesPositions;
+    }
+
+    public void removeObstacle(List<Coord> snakePositions) {
+        obstaclesPositions.removeIf(snakePositions::contains);
     }
 }

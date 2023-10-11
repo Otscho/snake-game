@@ -55,17 +55,27 @@ public class SnakeGameLogic {
         Desert desert = level.getDesert();
         Snake snake = level.getSnake();
         Food food = level.getFood();
-
         Obstacles obstacles = level.getObstacles();
 
         Coord nextPosition = desert.getNextPosition(snake.getHeadPosition(), snake.getDirection());
         snake.movePosition(nextPosition);
 
         List<Coord> foodPositions = food.getFoodPositions();
+        List<Coord> snakePositions = snake.getSnakePositions();
+        List<Coord> obstaclesPositions = obstacles.getObstaclePositions();
+
+        // Tells the snake tod eat and adds Points
         if (foodPositions.contains(nextPosition)) {
-            level.replaceFood();
             snake.eat();
             points++;
+        }
+
+        // Replace food if snake ore obstacle owns position
+        for (Coord foodPosition : foodPositions) {
+            if (snakePositions.contains(foodPosition) || obstaclesPositions.contains(foodPosition)) {
+                food.removeFood(snake.getSnakePositions());
+                level.replaceFood();
+            }
         }
 
         // Checks if Snake has self collision
@@ -74,9 +84,16 @@ public class SnakeGameLogic {
         }
 
         // Checks if Snake collide with obstacle
-        Coord obstaclesPosition = obstacles.getObstaclePosition();
-        if (nextPosition.equals(obstaclesPosition)){
+        if (obstaclesPositions.contains(nextPosition)){
             game.setGameOver();
+        }
+
+        // Replace obstacle if snake ore food owns position
+        for (Coord obstaclePosition : obstaclesPositions) {
+            if (snakePositions.contains(obstaclePosition) || foodPositions.contains(obstaclePosition)) {
+                obstacles.removeObstacle(snake.getSnakePositions());
+                level.replaceObstacle();
+            }
         }
 
         // Redraw the game

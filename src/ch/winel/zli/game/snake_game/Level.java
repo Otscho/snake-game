@@ -5,7 +5,6 @@ import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 import javax.swing.JPanel;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 
 public class Level {
     private Desert desert;
@@ -16,13 +15,14 @@ public class Level {
     public Level() {
         desert = new Desert();
         snake = new Snake();
-        food = new Food();
-        obstacles = new Obstacles();
+        food = new Food(desert.getRandomPosition());
+        obstacles = new Obstacles(desert.getRandomPosition());
     }
 
     public void draw(JPanel panel, Graphics2D g){
         int dx = panel.getWidth() / this.desert.width;
         int dy = panel.getHeight() / this.desert.height;
+
         desert.draw(panel, g);
         snake.draw(g, dx, dy);
         food.draw(g, dx, dy);
@@ -47,10 +47,13 @@ public class Level {
     }
 
     public void replaceFood() {
-        food.replaceFood();
+        food.addFood(desert.getRandomPosition());
     }
 
     public Obstacles getObstacles() {
         return obstacles;
+    }
+
+    public void replaceObstacle() { obstacles.addObstacle(desert.getRandomPosition());
     }
 }

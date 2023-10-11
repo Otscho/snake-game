@@ -23,6 +23,12 @@ public class Snake {
         oldDirection = MoveDirection.down;
     }
 
+    /**
+     * draws the snake
+     * @param g
+     * @param dx
+     * @param dy
+     */
     public void draw(Graphics2D g, int dx, int dy) {
         for (int i = 0; i < snakePos.size(); i++) {
             Coord pos = snakePos.get(i);
@@ -65,6 +71,10 @@ public class Snake {
         this.eat = false;
     }
 
+
+    /**
+     * @param direction sets the direction of the snake
+     */
     public void setDirection(MoveDirection direction) {
         switch (direction) {
             case up:
@@ -90,13 +100,22 @@ public class Snake {
         }
     }
 
-    public List<Coord> getSnakePosition() {
+   // get the coordinates of the whole snake
+    public List<Coord> getSnakePositions() {
         return new ArrayList<>(snakePos);
     }
+
+    /**
+     * eat = true if snake had eaten food
+     */
     public void eat() {
         this.eat = true;
     }
 
+    /**
+     * Checks if snake have self collision
+     * @return true if snake hav a self collision
+     */
     public boolean hasSelfCollision() {
         Coord head = getHeadPosition();
         for (int i = 1; i < snakePos.size(); i++) {

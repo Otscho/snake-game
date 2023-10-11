@@ -5,6 +5,7 @@ import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.Random;
 
 public class Desert {
     public int width;
@@ -12,7 +13,9 @@ public class Desert {
 
     private  final int xSteps;
     private final int ySteps;
+    private Coord getRandomPositions;
 
+    private Random rand = new Random();
 
     public Desert() {
         width = 16;
@@ -41,8 +44,10 @@ public class Desert {
         return new Coord(x, y);
     }
 
-    public Coord getRadomPositions(){
-
+    // Generate a random position
+    public Coord getRandomPosition(){
+        int x = rand.nextInt(xSteps -1);
+        int y = rand.nextInt(ySteps -1);
+        return new Coord(x, y);
     }
-
 }
