@@ -11,11 +11,18 @@ public class Food {
     private final Desert desert = new Desert();
     private final Obstacles obstacles = new Obstacles();
 
-    public Food(List<Coord> snakePositions) {
+    public Food() {
         foodPositions = new ArrayList<>();
-        addFood(snakePositions);
+        List<Coord> snakeStartPos = new ArrayList<>();
+        snakeStartPos.add(new Coord (1,1));
+        addFood(snakeStartPos);
     }
 
+    /**
+     * @param g Graphics2D
+     * @param dx pixel size of x Coordinate
+     * @param dy pixel size of y Coordinate
+     */
     public void draw(Graphics2D g, int dx, int dy) {
         for (Coord pos : foodPositions) {
             g.setColor(Color.GREEN);
@@ -28,7 +35,7 @@ public class Food {
         }
     }
 
-    // Add food and checks if food intersects with snake ore food before add
+    // Add food and checks if food intersects with snake ore obstacle before add
     public void addFood(List<Coord> snakePositions) {
         Coord randomPos;
         List<Coord> obstaclesPosition = obstacles.getObstaclePositions();

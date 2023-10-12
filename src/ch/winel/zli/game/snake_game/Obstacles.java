@@ -9,10 +9,12 @@ import java.util.List;
 public class Obstacles {
     private final List<Coord> obstaclesPositions;
     private final Desert desert = new Desert();
-    private Food food;
-    public Obstacles(List<Coord> snakePositions) {
+
+    public Obstacles() {
         obstaclesPositions = new ArrayList<>();
-        addObstacle(snakePositions);
+        List<Coord> snakeStartPos = new ArrayList<>();
+        snakeStartPos.add(new Coord (1,1));
+        addObstacle(snakeStartPos);
     }
 
     public void draw(Graphics2D g, int dx, int dy) {
@@ -30,9 +32,8 @@ public class Obstacles {
     // Add obstacle and checks if obstacle intersects with snake ore food before add
     public void addObstacle(List<Coord> snakePositions) {
         Coord randomPos;
-        List<Coord> foodPosition = food.getFoodPositions();
         randomPos = desert.getRandomPosition();
-        while (snakePositions.contains(randomPos) || foodPosition.contains(randomPos)) {
+        while (snakePositions.contains(randomPos)) {
             randomPos = desert.getRandomPosition();
         }
         obstaclesPositions.add(randomPos);

@@ -13,9 +13,8 @@ public class Desert {
 
     private  final int xSteps;
     private final int ySteps;
-    private Coord getRandomPositions;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     public Desert() {
         width = 16;
@@ -28,6 +27,12 @@ public class Desert {
         g.fillRect(0,0, panel.getWidth(), panel.getHeight());
     }
 
+
+    /**
+     * @param position Position of the head of the snake
+     * @param direction Direction that the snake moves
+     * @return Returns the next position of the snake
+     */
     public Coord getNextPosition(Coord position, MoveDirection direction){
         int x = position.x;
         int y = position.y;
@@ -44,7 +49,9 @@ public class Desert {
         return new Coord(x, y);
     }
 
-    // Generate a random position
+    /**
+     * Get a random positions and returns it
+     */
     public Coord getRandomPosition(){
         int x = rand.nextInt(xSteps -1);
         int y = rand.nextInt(ySteps -1);

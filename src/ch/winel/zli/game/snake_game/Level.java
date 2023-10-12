@@ -1,22 +1,21 @@
 package ch.winel.zli.game.snake_game;
 
-import ch.winel.zli.game.snake_game.util.Coord;
 import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 import javax.swing.JPanel;
 import java.awt.Graphics2D;
 
 public class Level {
-    private Desert desert;
-    private Snake snake;
-    private Food food;
-    private Obstacles obstacles;
+    private final Desert desert;
+    private final Snake snake;
+    private final Food food;
+    private final Obstacles obstacles;
 
     public Level() {
         desert = new Desert();
         snake = new Snake();
-        food = new Food(snake.getSnakePositions());
-        obstacles = new Obstacles(snake.getSnakePositions());
+        food = new Food();
+        obstacles = new Obstacles();
     }
 
     public void draw(JPanel panel, Graphics2D g) {

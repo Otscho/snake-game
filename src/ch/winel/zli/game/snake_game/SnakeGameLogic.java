@@ -14,11 +14,11 @@ import java.util.TimerTask;
 public class SnakeGameLogic {
     private final SnakeGame game;
 
-    private Level level = new Level();;
+    private final Level level = new Level();
 
     private Timer timer;
     private int points;
-    private int levelHeight;
+    private final int levelHeight;
 
 
     public SnakeGameLogic(SnakeGame game) {
