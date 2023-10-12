@@ -15,11 +15,11 @@ public class Level {
     public Level() {
         desert = new Desert();
         snake = new Snake();
-        food = new Food(desert.getRandomPosition());
-        obstacles = new Obstacles(desert.getRandomPosition());
+        food = new Food(snake.getSnakePositions());
+        obstacles = new Obstacles(snake.getSnakePositions());
     }
 
-    public void draw(JPanel panel, Graphics2D g){
+    public void draw(JPanel panel, Graphics2D g) {
         int dx = panel.getWidth() / this.desert.width;
         int dy = panel.getHeight() / this.desert.height;
 
@@ -29,7 +29,7 @@ public class Level {
         obstacles.draw(g, dx, dy);
     }
 
-    public void changeDir(MoveDirection direction){
+    public void changeDir(MoveDirection direction) {
         snake.setDirection(direction);
     }
 
@@ -37,23 +37,29 @@ public class Level {
         return 500;
     }
 
-    Snake getSnake(){
+    Snake getSnake() {
         return snake;
     }
 
-    Food getFood() { return food;}
-
-    public Desert getDesert() {return desert;
-    }
-
-    public void replaceFood() {
-        food.addFood(desert.getRandomPosition());
+    Food getFood() {
+        return food;
     }
 
     public Obstacles getObstacles() {
         return obstacles;
     }
 
-    public void replaceObstacle() { obstacles.addObstacle(desert.getRandomPosition());
+    public Desert getDesert() {
+        return desert;
+    }
+
+    public void replaceFood() {
+        food.addFood(snake.getSnakePositions());
+        food.removeFood(snake.getSnakePositions());
+    }
+
+    public void replaceObstacle() {
+        obstacles.addObstacle(snake.getSnakePositions());
+        obstacles.removeObstacle(snake.getSnakePositions());
     }
 }

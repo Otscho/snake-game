@@ -12,17 +12,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SnakeGameLogic {
-    private SnakeGame game;
+    private final SnakeGame game;
 
-    private Level level;
+    private Level level = new Level();;
 
     private Timer timer;
     private int points;
     private int levelHeight;
 
+
     public SnakeGameLogic(SnakeGame game) {
         this.game = game;
-        this.level = new Level();
         this.points = 0;
         this.levelHeight = 1;
         initAfterLevelChanged();
@@ -61,22 +61,22 @@ public class SnakeGameLogic {
         snake.movePosition(nextPosition);
 
         List<Coord> foodPositions = food.getFoodPositions();
-        List<Coord> snakePositions = snake.getSnakePositions();
         List<Coord> obstaclesPositions = obstacles.getObstaclePositions();
 
         // Tells the snake tod eat and adds Points
         if (foodPositions.contains(nextPosition)) {
             snake.eat();
             points++;
+            level.replaceFood();
         }
 
-        // Replace food if snake ore obstacle owns position
-        for (Coord foodPosition : foodPositions) {
-            if (snakePositions.contains(foodPosition) || obstaclesPositions.contains(foodPosition)) {
-                food.removeFood(snake.getSnakePositions());
-                level.replaceFood();
-            }
-        }
+//        // Replace food if snake ore obstacle owns position
+//        for (Coord foodPosition : foodPositions) {
+//            if (snakePositions.contains(foodPosition) || obstaclesPositions.contains(foodPosition)) {
+//                food.removeFood(snake.getSnakePositions());
+//                level.replaceFood();
+//            }
+//        }
 
         // Checks if Snake has self collision
         if (snake.hasSelfCollision()){
@@ -88,14 +88,13 @@ public class SnakeGameLogic {
             game.setGameOver();
         }
 
-        // Replace obstacle if snake ore food owns position
-        for (Coord obstaclePosition : obstaclesPositions) {
-            if (snakePositions.contains(obstaclePosition) || foodPositions.contains(obstaclePosition)) {
-                obstacles.removeObstacle(snake.getSnakePositions());
-                level.replaceObstacle();
-            }
-        }
-
+//        // Replace obstacle if snake ore food owns position
+//        for (Coord obstaclePosition : obstaclesPositions) {
+//            if (snakePositions.contains(obstaclePosition) || foodPositions.contains(obstaclePosition)) {
+//                obstacles.removeObstacle(snake.getSnakePositions());
+//                level.replaceObstacle();
+//            }
+//        }
         // Redraw the game
         game.gameNeedsRedraw();
     }

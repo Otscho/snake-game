@@ -41,7 +41,6 @@ public class SnakeGame extends Game {
 
     @Override
     public void pauseGame() {
-        System.out.println("pauseGame");
         gamePaused = !gamePaused;
     }
 
@@ -80,7 +79,7 @@ public class SnakeGame extends Game {
         g.setFont(new Font("myFont", 3, fontSize));
 
         g.drawString(
-                isPauseGame() ? "Game Paused" : "Game Running", 20, 20 + fontSize);
+                gamePaused ? "Game Paused" : "Game Running", 20, 20 + fontSize);
         if (isGameOver) {
             g.drawString("Game Over", 20, 40 + 3 * fontSize);
         }

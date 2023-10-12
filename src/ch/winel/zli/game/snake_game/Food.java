@@ -8,10 +8,12 @@ import java.util.List;
 
 public class Food {
     private final List<Coord> foodPositions;
+    private final Desert desert = new Desert();
+    private final Obstacles obstacles = new Obstacles();
 
-    public Food(Coord random) {
+    public Food(List<Coord> snakePositions) {
         foodPositions = new ArrayList<>();
-        foodPositions.add(random);
+        addFood(snakePositions);
     }
 
     public void draw(Graphics2D g, int dx, int dy) {
@@ -26,8 +28,15 @@ public class Food {
         }
     }
 
-    public void addFood(Coord randomPosition) {
-        foodPositions.add(randomPosition);
+    // Add food and checks if food intersects with snake ore food before add
+    public void addFood(List<Coord> snakePositions) {
+        Coord randomPos;
+        List<Coord> obstaclesPosition = obstacles.getObstaclePositions();
+        randomPos = desert.getRandomPosition();
+        while (snakePositions.contains(randomPos) || obstaclesPosition.contains(randomPos)) {
+            randomPos = desert.getRandomPosition();
+        }
+        foodPositions.add(randomPos);
     }
 
     public List<Coord> getFoodPositions() {
