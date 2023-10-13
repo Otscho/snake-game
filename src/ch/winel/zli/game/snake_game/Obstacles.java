@@ -13,7 +13,7 @@ public class Obstacles {
     public Obstacles() {
         obstaclesPositions = new ArrayList<>();
         List<Coord> snakeStartPos = new ArrayList<>();
-        snakeStartPos.add(new Coord (1,1));
+        snakeStartPos.add(new Coord(1, 1));
         addObstacle(snakeStartPos);
     }
 

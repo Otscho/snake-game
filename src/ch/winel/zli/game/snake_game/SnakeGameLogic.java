@@ -1,15 +1,15 @@
 package ch.winel.zli.game.snake_game;
 
-        import ch.winel.zli.game.snake_game.util.Coord;
-        import ch.winel.zli.game.snake_game.util.MoveDirection;
+import ch.winel.zli.game.snake_game.util.Coord;
+import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 
-        import javax.swing.*;
-        import java.awt.*;
+import javax.swing.*;
+import java.awt.*;
 
-        import java.util.List;
-        import java.util.Timer;
-        import java.util.TimerTask;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SnakeGameLogic {
     private final SnakeGame game;
@@ -105,7 +105,7 @@ public class SnakeGameLogic {
     // initialize the game after the level has changed
     public void initAfterLevelChanged() {
         // cancel the current timer
-        if (timer!= null) {
+        if (timer != null) {
             timer.cancel();
         }
 

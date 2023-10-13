@@ -25,6 +25,7 @@ public class Snake {
 
     /**
      * draws the snake
+     *
      * @param g
      * @param dx
      * @param dy
@@ -100,7 +101,7 @@ public class Snake {
         }
     }
 
-   // get the coordinates of the whole snake
+    // get the coordinates of the whole snake
     public List<Coord> getSnakePositions() {
         return new ArrayList<>(snakePos);
     }
@@ -114,6 +115,7 @@ public class Snake {
 
     /**
      * Checks if snake have self collision
+     *
      * @return true if snake hav a self collision
      */
     public boolean hasSelfCollision() {

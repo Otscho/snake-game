@@ -14,12 +14,12 @@ public class Food {
     public Food() {
         foodPositions = new ArrayList<>();
         List<Coord> snakeStartPos = new ArrayList<>();
-        snakeStartPos.add(new Coord (1,1));
+        snakeStartPos.add(new Coord(1, 1));
         addFood(snakeStartPos);
     }
 
     /**
-     * @param g Graphics2D
+     * @param g  Graphics2D
      * @param dx pixel size of x Coordinate
      * @param dy pixel size of y Coordinate
      */

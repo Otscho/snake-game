@@ -1,4 +1,5 @@
 package ch.winel.zli.game.snake_game;
+
 import ch.winel.zli.game.Game;
 import ch.winel.zli.game.snake_game.util.MoveDirection;
 
@@ -6,7 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SnakeGame extends Game {
-    SnakeGameLogic snakeGameLogic;;
+    SnakeGameLogic snakeGameLogic;
+    ;
     private boolean isGameOver;
     private boolean gamePaused;
 
@@ -16,17 +18,18 @@ public class SnakeGame extends Game {
         snakeGameLogic = new SnakeGameLogic(this);
         isGameOver = false;
     }
+
     @Override
     public void newGame() {
         System.out.println("newGame");
-        if (snakeGameLogic != null){
+        if (snakeGameLogic != null) {
             snakeGameLogic.cancelTimer();
             this.snakeGameLogic = new SnakeGameLogic(this);
             snakeGameLogic.initAfterLevelChanged();
-            if (!gamePaused){
+            if (!gamePaused) {
                 gamePaused = true;
             }
-            if (isGameOver){
+            if (isGameOver) {
                 isGameOver = false;
             }
             gameNeedsRedraw();
@@ -78,11 +81,11 @@ public class SnakeGame extends Game {
 
         g.setFont(new Font("myFont", 3, fontSize));
 
-        if (gamePaused){ g.drawString(
-                "Game Paused", 20, 20 + fontSize);
+        if (gamePaused) {
+            g.drawString(
+                    "Game Paused", 20, 20 + fontSize);
             gameNeedsRedraw();
-        }
-        else {
+        } else {
             g.drawString(
                     "Game Running", 20, 20 + fontSize);
             gameNeedsRedraw();
@@ -105,9 +108,10 @@ public class SnakeGame extends Game {
         return gamePaused;
     }
 
-    public void setGameOver(){
+    public void setGameOver() {
         isGameOver = true;
     }
+
     public boolean isGameOver() {
         return isGameOver;
     }
