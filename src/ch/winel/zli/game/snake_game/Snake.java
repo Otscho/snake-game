@@ -14,7 +14,7 @@ public class Snake {
     private final List<Coord> snakePos;
     private MoveDirection direction;
     private MoveDirection oldDirection;
-    private boolean eat = false;
+    public boolean eat = false;
 
     public Snake() {
         snakePos = new ArrayList<>();

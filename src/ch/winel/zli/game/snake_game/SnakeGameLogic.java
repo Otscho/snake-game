@@ -1,26 +1,25 @@
 package ch.winel.zli.game.snake_game;
 
-import ch.winel.zli.game.snake_game.util.Coord;
-import ch.winel.zli.game.snake_game.util.MoveDirection;
+        import ch.winel.zli.game.snake_game.util.Coord;
+        import ch.winel.zli.game.snake_game.util.MoveDirection;
 
 
-import javax.swing.*;
-import java.awt.*;
+        import javax.swing.*;
+        import java.awt.*;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+        import java.util.List;
+        import java.util.Timer;
+        import java.util.TimerTask;
 
 public class SnakeGameLogic {
     private final SnakeGame game;
-
-    private final Level level = new Level();
-
+    private Level level = new Level();
     private Timer timer;
     private int points;
-    private final int levelHeight;
+    private int levelHeight;
+    private LevelFactory levelFactory = new LevelFactory();
 
-
+    // constructor
     public SnakeGameLogic(SnakeGame game) {
         this.game = game;
         this.points = 0;
@@ -28,90 +27,95 @@ public class SnakeGameLogic {
         initAfterLevelChanged();
     }
 
+    // draw the level
     public void draw(JPanel panel, Graphics2D g) {
         level.draw(panel, g);
     }
 
-    void initAfterLevelChanged() {
-
-        // We need a periodical tick for this level
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                processTick();
-            }
-        }, 100, level.getLevelVelocity());
-    }
-
-    public void processTick() {
-        // if game over ore paused don't do anything
+    // process a tick of the game
+    void processTick() {
+        // if game over or paused, don't do anything
         if (game.isPauseGame() || game.isGameOver()) {
             return;
         }
+
+        // get the Desert, Snake, Food, and Obstacles objects
         Desert desert = level.getDesert();
         Snake snake = level.getSnake();
         Food food = level.getFood();
         Obstacles obstacles = level.getObstacles();
 
+        // get the next position of the snake based on its current position and direction
         Coord nextPosition = desert.getNextPosition(snake.getHeadPosition(), snake.getDirection());
         snake.movePosition(nextPosition);
 
+        // check if the snake has eaten the food
         List<Coord> foodPositions = food.getFoodPositions();
-        List<Coord> obstaclesPositions = obstacles.getObstaclePositions();
-
-        // Tells the snake tod eat and adds Points
         if (foodPositions.contains(nextPosition)) {
             snake.eat();
             points++;
             level.replaceFood();
         }
 
-//        // Replace food if snake ore obstacle owns position
-//        for (Coord foodPosition : foodPositions) {
-//            if (snakePositions.contains(foodPosition) || obstaclesPositions.contains(foodPosition)) {
-//                food.removeFood(snake.getSnakePositions());
-//                level.replaceFood();
-//            }
-//        }
-
-        // Checks if Snake has self collision
-        if (snake.hasSelfCollision()){
+        // check if the snake has collided with an obstacle
+        List<Coord> obstaclePositions = obstacles.getObstaclePositions();
+        if (obstaclePositions.contains(nextPosition)) {
             game.setGameOver();
         }
 
-        // Checks if Snake collide with obstacle
-        if (obstaclesPositions.contains(nextPosition)){
+        // check if the snake has collided with its own body
+        if (snake.hasSelfCollision()) {
             game.setGameOver();
         }
 
-//        // Replace obstacle if snake ore food owns position
-//        for (Coord obstaclePosition : obstaclesPositions) {
-//            if (snakePositions.contains(obstaclePosition) || foodPositions.contains(obstaclePosition)) {
-//                obstacles.removeObstacle(snake.getSnakePositions());
-//                level.replaceObstacle();
-//            }
-//        }
-        // Redraw the game
+        // increase the level if the number of points is a multiple of 10
+        if (snake.eat) {
+            if (points % 10 == 0 && points != 0) {
+                level = levelFactory.createLevel();
+                levelFactory.increaseLevel();
+                initAfterLevelChanged();
+                levelHeight++;
+            }
+        }
+
+        // update the game state
         game.gameNeedsRedraw();
     }
 
+    // change the direction of the snake
     public void changeDir(MoveDirection direction) {
         level.changeDir(direction);
     }
 
+    // cancel the timer
     public void cancelTimer() {
         timer.cancel();
     }
 
+    // get the level height
     public int getLevelHeight() {
         return this.levelHeight;
     }
 
+    // get the number of points
     public int getPoints() {
         return this.points;
+    }
+
+    // initialize the game after the level has changed
+    public void initAfterLevelChanged() {
+        // cancel the current timer
+        if (timer!= null) {
+            timer.cancel();
+        }
+
+        // create a new timer with the new level velocity
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                processTick();
+            }
+        }, 500, level.getLevelVelocity());
     }
 }
