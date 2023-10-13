@@ -116,6 +116,6 @@ public class SnakeGameLogic {
             public void run() {
                 processTick();
             }
-        }, 500, level.getLevelVelocity());
+        }, 100, level.getLevelVelocity());
     }
 }

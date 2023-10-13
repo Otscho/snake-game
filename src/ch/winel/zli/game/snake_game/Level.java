@@ -10,6 +10,7 @@ public class Level {
     private final Snake snake;
     private final Food food;
     private final Obstacles obstacles;
+    private long levelVelocity = 400;
 
     public Level() {
         desert = new Desert();
@@ -33,7 +34,7 @@ public class Level {
     }
 
     public long getLevelVelocity() {
-        return 500;
+        return levelVelocity;
     }
 
     Snake getSnake() {
@@ -56,9 +57,7 @@ public class Level {
         food.addFood(snake.getSnakePositions());
         food.removeFood(snake.getSnakePositions());
     }
-
-    public void replaceObstacle() {
-        obstacles.addObstacle(snake.getSnakePositions());
-        obstacles.removeObstacle(snake.getSnakePositions());
+    public void setLevelVelocity(long velocity) {
+        this.levelVelocity = velocity;
     }
 }
