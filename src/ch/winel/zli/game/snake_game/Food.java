@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Food {
-    private final List<Coord> foodPositions;
+    public final List<Coord> foodPositions;
     private final Desert desert = new Desert();
     private final Obstacles obstacles = new Obstacles();
 

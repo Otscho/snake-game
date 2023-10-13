@@ -37,7 +37,7 @@ public class Level {
         return levelVelocity;
     }
 
-    Snake getSnake() {
+    public Snake getSnake() {
         return snake;
     }
 
