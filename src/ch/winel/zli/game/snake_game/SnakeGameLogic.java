@@ -17,7 +17,7 @@ public class SnakeGameLogic {
     private Timer timer;
     private int points;
     private int levelHeight;
-    private LevelFactory levelFactory = new LevelFactory();
+    private final LevelFactory levelFactory = new LevelFactory();
 
     // constructor
     public SnakeGameLogic(SnakeGame game) {
@@ -39,38 +39,33 @@ public class SnakeGameLogic {
             return;
         }
 
-        // get the Desert, Snake, Food, and Obstacles objects
-        Desert desert = level.getDesert();
-        Snake snake = level.getSnake();
-        Food food = level.getFood();
-        Obstacles obstacles = level.getObstacles();
 
         // get the next position of the snake based on its current position and direction
-        Coord nextPosition = desert.getNextPosition(snake.getHeadPosition(), snake.getDirection());
-        snake.movePosition(nextPosition);
+        Coord nextPosition = level.getDesert().getNextPosition(level.getSnake().getHeadPosition(), level.getSnake().getDirection());
+        level.getSnake().movePosition(nextPosition);
 
         // check if the snake has eaten the food
-        List<Coord> foodPositions = food.getFoodPositions();
+        List<Coord> foodPositions = level.getFoodPositions();
         if (foodPositions.contains(nextPosition)) {
-            snake.eat();
+            level.getSnake().eat();
             points++;
             level.replaceFood();
         }
 
         // check if the snake has collided with an obstacle
-        List<Coord> obstaclePositions = obstacles.getObstaclePositions();
+        List<Coord> obstaclePositions = level.getObstaclePositions();
         if (obstaclePositions.contains(nextPosition)) {
             game.setGameOver();
         }
 
         // check if the snake has collided with its own body
-        if (snake.hasSelfCollision()) {
+        if (level.getSnake().hasSelfCollision()) {
             game.setGameOver();
         }
 
-        // increase the level if the number of points is a multiple of 10
-        if (snake.eat) {
-            if (points % 10 == 0 && points != 0) {
+        // increase the level if the number of points is a multiple of 20
+        if (level.getSnake().eat) {
+            if (points % 20 == 0 && points != 0) {
                 level = levelFactory.createLevel();
                 levelFactory.increaseLevel();
                 initAfterLevelChanged();
