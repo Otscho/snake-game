@@ -9,13 +9,13 @@ import java.util.List;
 public class Food {
     public final List<Coord> foodPositions;
     private final Desert desert = new Desert();
-    private final Obstacles obstacles = new Obstacles();
+
 
     public Food() {
         foodPositions = new ArrayList<>();
         List<Coord> snakeStartPos = new ArrayList<>();
         snakeStartPos.add(new Coord(1, 1));
-        addFood(snakeStartPos);
+        addFood(snakeStartPos, snakeStartPos);
     }
 
     /**
@@ -36,11 +36,10 @@ public class Food {
     }
 
     // Add food and checks if food intersects with snake ore obstacle before add
-    public void addFood(List<Coord> snakePositions) {
+    public void addFood(List<Coord> snakePositions, List<Coord>obstaclesPositions) {
         Coord randomPos;
-        List<Coord> obstaclesPosition = obstacles.getObstaclePositions();
         randomPos = desert.getRandomPosition();
-        while (snakePositions.contains(randomPos) || obstaclesPosition.contains(randomPos)) {
+        while (snakePositions.contains(randomPos) || obstaclesPositions.contains(randomPos)) {
             randomPos = desert.getRandomPosition();
         }
         foodPositions.add(randomPos);

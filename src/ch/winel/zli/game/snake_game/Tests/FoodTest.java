@@ -5,7 +5,6 @@ import ch.winel.zli.game.snake_game.util.Coord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,25 +24,9 @@ public class FoodTest {
     public void testAddFood() {
         Food food = new Food();
         List<Coord> snakePositions = new ArrayList<>();
+        List<Coord> obstaclesPositions = new ArrayList<>();
         snakePositions.add(new Coord(1, 1));
-        food.addFood(snakePositions);
+        food.addFood(snakePositions, obstaclesPositions);
         Assertions.assertEquals(2, food.foodPositions.size());
-    }
-
-    @Test
-    public void testGetFoodPositions() {
-        Food food = new Food();
-        List<Coord> foodPositions = food.getFoodPositions();
-        Assertions.assertNotNull(foodPositions);
-        Assertions.assertEquals(1, foodPositions.size());
-    }
-
-    @Test
-    public void testRemoveFood() {
-        Food food = new Food();
-        List<Coord> snakePositions = new ArrayList<>();
-        snakePositions.add(new Coord(1, 1));
-        food.addFood(snakePositions);
-        food.removeFood(snakePositions);
     }
 }

@@ -54,7 +54,7 @@ public class Level {
     }
 
     public void replaceFood() {
-        food.addFood(snake.getSnakePositions());
+        food.addFood(snake.getSnakePositions(), obstacles.getObstaclePositions());
         food.removeFood(snake.getSnakePositions());
     }
     public void setLevelVelocity(long velocity) {

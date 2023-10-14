@@ -14,7 +14,7 @@ public class Obstacles {
         obstaclesPositions = new ArrayList<>();
         List<Coord> snakeStartPos = new ArrayList<>();
         snakeStartPos.add(new Coord(1, 1));
-        addObstacle(snakeStartPos);
+        addObstacle(snakeStartPos, snakeStartPos);
     }
 
     public void draw(Graphics2D g, int dx, int dy) {
@@ -30,10 +30,10 @@ public class Obstacles {
     }
 
     // Add obstacle and checks if obstacle intersects with snake ore food before add
-    public void addObstacle(List<Coord> snakePositions) {
+    public void addObstacle(List<Coord> snakePositions, List<Coord> foodPositions) {
         Coord randomPos;
         randomPos = desert.getRandomPosition();
-        while (snakePositions.contains(randomPos)) {
+        while (snakePositions.contains(randomPos) || foodPositions.contains(randomPos)) {
             randomPos = desert.getRandomPosition();
         }
         obstaclesPositions.add(randomPos);
@@ -43,7 +43,4 @@ public class Obstacles {
         return obstaclesPositions;
     }
 
-    public void removeObstacle(List<Coord> snakePositions) {
-        obstaclesPositions.removeIf(snakePositions::contains);
-    }
 }
